@@ -244,6 +244,12 @@ module CarrierWave
         #   or
         # [NilClass] no public url available
         #
+        
+        def rename_file(name)
+          connection.copy(@uploader.fog_directory, @path, @uploader.fog_directory, @path, directive=:replace, "content-disposition" => "attachment; filename = #{name}")
+        end
+
+
         def public_url
           if host = @uploader.fog_host
             "#{host}/#{path}"
